@@ -144,7 +144,7 @@ def get_state(observation, prev_observatin):
 
 #################################################################
 env = gym.make('Pong-v0') #action = [1 - stay , 2 - up , 3 - down]
-e = 0.01 #0.35
+e = 0.35 # EPS
 net = NN()
 print_summary(net.net)
 # загрузка сетей
@@ -212,29 +212,3 @@ for epoch in range(10000):
     net.net.save_weights('./save/pong_cnn.h5')
     env.render()
     env.close() 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
