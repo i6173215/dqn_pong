@@ -66,10 +66,10 @@ class NN:
                 br.append(r[index[i]])
                 btm.append(tm[index[i]])
                 bns.append(ns[index[i]])
-            self.optimize_on_memory(bs,ba,br,btm,bns)
+            self.optimize_on_batch(bs,ba,br,btm,bns)
         return bs, ba, br, btm, bns
     
-    def optimize_on_memory(self, s, a, r, tm, ns):
+    def optimize_on_batch(self, s, a, r, tm, ns):
         """Обучает на введенных массивах
         [state, action, reward, terminal_marks, new_state] 
         одним пакетом через функцию fit
