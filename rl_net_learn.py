@@ -148,6 +148,7 @@ net.net.load_weights('./save/best_pong_net.h5')
 best_perfomance = 5 # текущий лучший вариант для сохранения, если лучше
 states, rewards, actions, ns = [], [], [], []
 start_time = time.time()
+# старт по эпизодам
 for epoch in range(10000):
     num_games = 1
     action = np.random.randint(1,4)
@@ -158,6 +159,11 @@ for epoch in range(10000):
         done = False
         frame = 0
         e = e*0.999
+        # цикл для игры, записывается информация в массивы
+        # states - состояния
+        # actions - действие
+        # rewards - вознаграждения среды
+        # ns - новые состояния (new states) для maxQ
         while (not done):
 #            time.sleep(0.01) #раскомментируй если хочешь смотреть игру
 #            env.render() # раскомментируй если хочешь смотреть игру
