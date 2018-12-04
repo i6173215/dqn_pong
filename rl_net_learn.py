@@ -184,6 +184,7 @@ for epoch in range(10000):
                     frame = 1
             else:
                 rewards.append(reward)
+                curr_rew.append(reward)
                 new_state = get_state(observation, prev_observation)
                 ns.append(new_state)
     # Оценка игры, вывод информации, обновление лучшей сети
