@@ -5,7 +5,6 @@ import numpy as np
 from random import shuffle
 import time
 
-#################################################################
 from keras.models import Model
 from keras.layers import Input, Conv2D, Dense, Flatten
 from keras.utils import print_summary
@@ -116,8 +115,6 @@ def new_rewards(rewards):
     r = (r-m)/std
     return  r.clip(-1.,1.), term_marks 
 
-#################################################################
-
 def get_state(observation, prev_observatin):
     """получение состояния на основании текущего
     и предыдущего кадров
@@ -139,8 +136,6 @@ def get_state(observation, prev_observatin):
     img1 = out.astype(np.float) / 3.0
 
     return img1
-
-#################################################################
 
 #################################################################
 env = gym.make('Pong-v0') #action = [1 - stay , 2 - up , 3 - down]
