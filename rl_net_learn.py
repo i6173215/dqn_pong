@@ -190,7 +190,7 @@ for epoch in range(10000):
     # Оценка игры, вывод информации, обновление лучшей сети
     perfomance = sum(curr_rew)
     print epoch,") WINS = ",\
-          sum(curr_rew),', e=',"%1.3f"%e,\
+          sum(curr_rew),', e =',"%1.3f"%e,\
           ', memory = ', len(states),\
           " (","%5.1f"%(time.time()-start_time),"s)"
     if perfomance > best_perfomance:
