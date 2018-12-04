@@ -26,7 +26,7 @@ class NN:
         
         model = Model(inputs=inputs1,outputs=out)
         
-        opt = SGD(lr=1e-4, clipvalue=1.0)
+        opt = SGD(lr=1e-5, clipvalue=1.0)
         model.compile(loss='mse', optimizer=opt)
         self.net = model
         
@@ -49,11 +49,11 @@ class NN:
                 action = np.argmax(net_out[0])  
         return action, net_out[0]
     
-    def learn_on_batch(self,s,a,r,tm,ns, batch_size=128):
+    def learn_on_batch(self,s,a,r,tm,ns, batch_size=32):
         """формиуем пакеты из текущей памяти
         и отправляем их на обучение в метод optimize_on_memory
         """
-        step = np.random.randint(2,6)
+        step = np.random.randint(2,4)
         offset = np.random.randint(0,2)
         num_batch = (len(s)-offset) // (batch_size * step)
         index = range(offset, len(s), step)
