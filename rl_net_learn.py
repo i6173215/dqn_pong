@@ -50,7 +50,7 @@ class NN:
         return action, net_out[0]
     
     def learn_on_batch(self,s,a,r,tm,ns, batch_size=32):
-        """формиуем пакеты из текущей памяти
+        """формируем пакеты из текущей памяти
         и отправляем их на обучение в метод optimize_on_memory
         """
         step = np.random.randint(2,4)
