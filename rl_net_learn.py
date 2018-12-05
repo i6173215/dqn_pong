@@ -143,8 +143,8 @@ e = 0.35 # EPS
 net = NN()
 print_summary(net.net)
 # загрузка сетей
-#net.net.load_weights('./save/pong_cnn.h5')
-net.net.load_weights('./save/best_pong_net.h5')
+net.net.load_weights('./save/pong_cnn.h5')
+#net.net.load_weights('./save/best_pong_net.h5')
 best_perfomance = 5 # текущий лучший вариант для сохранения, если лучше
 states, rewards, actions, ns = [], [], [], []
 start_time = time.time()
