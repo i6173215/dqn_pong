@@ -13,16 +13,14 @@ from keras.optimizers import SGD
 class NN:
     def __init__(self):
         inputs1 = Input(shape=(80,80,1))
-        conv1 = Conv2D(8,(8,8), strides=4, activation='relu',\
+        conv1 = Conv2D(32,(8,8), strides=4, activation='relu',\
                        kernel_initializer='he_normal')(inputs1)
-        conv2 = Conv2D(16,(4,4), strides=2, activation='relu',\
+        conv2 = Conv2D(64,(4,4), strides=2, activation='relu',\
                        kernel_initializer='he_normal')(conv1)
         flat = Flatten()(conv2)
-        fc1 = Dense(128, activation='relu',\
+        fc1 = Dense(256, activation='relu',\
                     kernel_initializer='he_normal')(flat)
-        fc2 = Dense(64, activation='relu',\
-                    kernel_initializer='he_normal')(fc1)
-        out = Dense(3, activation='linear')(fc2)
+        out = Dense(3, activation='linear')(fc1)
         
         model = Model(inputs=inputs1,outputs=out)
         
@@ -49,11 +47,11 @@ class NN:
                 action = np.argmax(net_out[0])  
         return action, net_out[0]
     
-    def learn_on_batch(self,s,a,r,tm,ns, batch_size=32):
+    def learn_on_batch(self,s,a,r,tm,ns, batch_size=256):
         """формируем пакеты из текущей памяти
         и отправляем их на обучение в метод optimize_on_memory
         """
-        step = np.random.randint(2,4)
+        step = np.random.randint(2,3)
         offset = np.random.randint(0,2)
         num_batch = (len(s)-offset) // (batch_size * step)
         index = range(offset, len(s), step)
@@ -74,7 +72,7 @@ class NN:
         [state, action, reward, terminal_marks, new_state] 
         одним пакетом через функцию fit
         """
-        GAMMA = 0.9999
+        GAMMA = 0.99
         train_X = np.array(s)
         ns_x = np.array(ns)
         # активируем выходы, что бы по другим 
@@ -139,7 +137,7 @@ def get_state(observation, prev_observatin):
 
 #################################################################
 env = gym.make('Pong-v0') #action = [1 - stay , 2 - up , 3 - down]
-e = 0.35 # EPS
+e = 0.65 # EPS
 net = NN()
 print_summary(net.net)
 # загрузка сетей
@@ -198,7 +196,7 @@ for epoch in range(10000):
         net.net.save_weights('./save/best_pong_net.h5')
         print 'Best Net Saved ...'
     # Обучение, если память >110000
-    if len(states) > 110000:
+    if len(states) > 50000:
         assert len(rewards) == len(states) == len(actions) == len(ns)
         new_rew, term_marks = new_rewards(rewards)
         assert len(new_rew)==len(term_marks)==len(states)
@@ -206,10 +204,10 @@ for epoch in range(10000):
     
     # Очистка памяти если превысили 250000 (~25Gb)
     # удаляю старые 10000 элементов
-    if len(states) > 250000:
+    if len(states) > 150000:
         states, actions, rewards,\
-        term_marks, ns = states[-240000:], actions[-240000:], \
-                    rewards[-240000:], term_marks[-240000:], ns[-240000:]
+        term_marks, ns = states[-140000:], actions[-140000:], \
+                    rewards[-140000:], term_marks[-140000:], ns[-140000:]
     # сохраним текущую сеть
     net.net.save_weights('./save/pong_cnn.h5')
     env.render()
